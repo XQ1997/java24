@@ -4,15 +4,15 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kaishengit.pojo">
 
-    <class name="User" table="user">
+    <class name="Card" table="card">
         <id name="id">
-            <generator class="native"/>
+            <!--外键的主键生成策略-->
+            <generator class="foreign">
+                <param name="property">person</param>
+            </generator>
         </id>
-        <property name="userName" column="user_name"/>
-        <set name="addressSet" order-by="id desc" inverse="true" cascade="delete">
-            <key column="user_id"></key>
-            <one-to-many class="Address"/>
-        </set>
+        <property name="cardNum" column="card_num"/>
+        <one-to-one name="person" class="Person"/>
     </class>
 
 </hibernate-mapping>

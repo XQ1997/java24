@@ -4,14 +4,17 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kaishengit.pojo">
 
-    <class name="User" table="user">
+    <class name="Student" table="student">
         <id name="id">
             <generator class="native"/>
         </id>
-        <property name="userName" column="user_name"/>
-        <set name="addressSet" order-by="id desc" inverse="true" cascade="delete">
-            <key column="user_id"></key>
-            <one-to-many class="Address"/>
+        <property name="studentName" column="student_name"/>
+        <!--
+            many to many 中 order-by是关系表的列
+        -->
+        <set name="teacherSet" table="teacher_student">
+            <key column="student_id"></key>
+            <many-to-many class="Teacher" column="teacher_id" order-by="id desc"/>
         </set>
     </class>
 
