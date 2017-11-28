@@ -7,7 +7,7 @@
     <session-factory>
         <!--数据库连接-->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql:///mydb?useSSL=false</property>
+        <property name="connection.url">jdbc:mysql:///hibernate?useSSL=false</property>
         <property name="connection.username">root</property>
         <property name="connection.password">rootroot</property>
 
@@ -30,6 +30,8 @@
 
         <!--映射文件的注册-->
         <mapping resource="hbm/Product.hbm.xml"/>
+        <mapping resource="hbm/Address.hbm.xml"/>
+        <mapping resource="hbm/User.hbm.xml"/>
     </session-factory>
 
 </hibernate-configuration>
