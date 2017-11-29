@@ -32,7 +32,7 @@ public class HelloWorld {
         Transaction transaction = session.beginTransaction();
         //5. 执行操作
         Product product = new Product();
-        product.setProductName("HDMI转接器");
+        product.setProductName("HDMI2.1转接器");
         product.setProductInventory(100);
 
         session.save(product);
@@ -50,7 +50,7 @@ public class HelloWorld {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         //.,...
-        Product product = (Product) session.get(Product.class,2);
+        Product product = (Product) session.get(Product.class,3);
         System.out.println(product);
 
         session.getTransaction().commit();

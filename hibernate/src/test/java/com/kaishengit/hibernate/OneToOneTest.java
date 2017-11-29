@@ -5,6 +5,7 @@ import com.kaishengit.pojo.Person;
 import com.kaishengit.pojo.Post;
 import com.kaishengit.pojo.PostContent;
 import com.kaishengit.util.HibernateUtil;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class OneToOneTest {
         session.getTransaction().begin();
     }
 
-    @After
+    //@After
     public void after() {
         session.getTransaction().commit();
     }
@@ -42,7 +43,7 @@ public class OneToOneTest {
 
     @Test
     public void find() {
-        Person person = (Person) session.get(Person.class,4);
+        Person person = (Person) session.get(Person.class,1);
         System.out.println(person.getPersonName());
         System.out.println(person.getCard().getCardNum());
     }
@@ -72,7 +73,13 @@ public class OneToOneTest {
     public void findByPost() {
         Post post = (Post) session.get(Post.class,5);
         System.out.println(post.getTitle());
+
+        //Hibernate.initialize(post.getPostContent());
         System.out.println(post.getPostContent().getContent());
+
+        session.getTransaction().commit();
+
+
     }
 
 }

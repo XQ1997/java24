@@ -108,14 +108,14 @@ public class OneToManyTest {
 
     @Test
     public void delete() {
-        Criteria criteria = session.createCriteria(Address.class);
+        /*Criteria criteria = session.createCriteria(Address.class);
         criteria.add(Restrictions.eq("user.id",6));
         List<Address> addressList =  criteria.list();
         for(Address address : addressList) {
             session.delete(address);
-        }
+        }*/
 
-        User user = (User) session.get(User.class,6);
+        User user = (User) session.get(User.class,1);
         session.delete(user);
     }
 

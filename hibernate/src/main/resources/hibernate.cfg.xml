@@ -28,8 +28,25 @@
 
         <property name="current_session_context_class">thread</property>
 
+        <!--开启二级缓存：设置二级缓存的实现类-->
+        <property name="cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+        <!--隔离级别的设定 值为 1 2 4 8 -->
+        <!--<property name="connection.isolation">4</property>-->
+
+        <!--Pojo类的注册-->
+        <mapping class="com.kaishengit.pojo.Product"/>
+        <mapping class="com.kaishengit.pojo.User"/>
+        <mapping class="com.kaishengit.pojo.Address"/>
+        <mapping class="com.kaishengit.pojo.Student"/>
+        <mapping class="com.kaishengit.pojo.Teacher"/>
+        <mapping class="com.kaishengit.pojo.Post"/>
+        <mapping class="com.kaishengit.pojo.PostContent"/>
+        <mapping class="com.kaishengit.pojo.Person"/>
+        <mapping class="com.kaishengit.pojo.Card"/>
+        <mapping class="com.kaishengit.pojo.Customer"/>
+
         <!--映射文件的注册-->
-        <mapping resource="hbm/Product.hbm.xml"/>
+        <!--<mapping resource="hbm/Product.hbm.xml"/>
         <mapping resource="hbm/Address.hbm.xml"/>
         <mapping resource="hbm/User.hbm.xml"/>
         <mapping resource="hbm/Student.hbm.xml"/>
@@ -38,6 +55,7 @@
         <mapping resource="hbm/Card.hbm.xml"/>
         <mapping resource="hbm/Post.hbm.xml"/>
         <mapping resource="hbm/PostContent.hbm.xml"/>
+        <mapping resource="hbm/Customer.hbm.xml"/>-->
     </session-factory>
 
 </hibernate-configuration>
