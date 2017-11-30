@@ -2,9 +2,12 @@ package com.kaishengit.pojo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -23,6 +26,10 @@ public class Product {
     private String place;
     @Column(name = "comment_num")
     private Integer commentNum;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
+    private ProductType productType;
 
     public Integer getId() {
         return id;
@@ -70,5 +77,13 @@ public class Product {
 
     public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 }
