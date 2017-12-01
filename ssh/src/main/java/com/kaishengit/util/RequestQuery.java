@@ -45,15 +45,15 @@ public class RequestQuery {
             String queryKey = enumeration.nextElement();
             String value = request.getParameter(queryKey);
             if(queryKey.startsWith("q_") && !"".equals(value) && value != null) {
-                //q_xxx_eq_s
-                String[] array = queryKey.split("_");
+                //q_eq_bd_price_or_marketPrice
+                String[] array = queryKey.split("_",4);
                 if(array == null || array.length != 4) {
                     throw new IllegalArgumentException("查询条件异常:" + queryKey);
                 }
                 RequestQuery requestQuery = new RequestQuery();
-                requestQuery.setParameterName(array[1]);
-                requestQuery.setEqualType(array[2]);
-                requestQuery.setValue(tranValueType(array[3],value));
+                requestQuery.setParameterName(array[3]);
+                requestQuery.setEqualType(array[1]);
+                requestQuery.setValue(tranValueType(array[2],value));
 
                 requestQueryList.add(requestQuery);
             }

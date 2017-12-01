@@ -1,11 +1,15 @@
 package com.kaishengit.dao;
 
+import com.kaishengit.pojo.Product;
+import com.kaishengit.util.Page;
 import com.kaishengit.util.RequestQuery;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -60,16 +64,25 @@ public abstract class BaseDao<T,PK extends Serializable> {
 
     public List<T> findByRequestQueryList(List<RequestQuery> requestQueryList){
         Criteria criteria = getSession().createCriteria(entityClazz);
-        for(RequestQuery requestQuery : requestQueryList) {
-            String paramName = requestQuery.getParameterName();
-            String type = requestQuery.getEqualType();
-            Object value = requestQuery.getValue();
-            criteria.add(createCriterion(paramName,type,value));
-        }
+        builderWhereCondition(requestQueryList, criteria);
         return criteria.list();
     }
 
     public Criterion createCriterion(String paramName,String type,Object value) {
+        if(paramName.contains("_or_")) {
+            // price,marketPrice
+            String[] paramNames = paramName.split("_or_");
+            Disjunction disjunction = Restrictions.disjunction();
+            for(String name : paramNames) {
+                disjunction.add(builderWhere(name,type,value));
+            }
+            return disjunction;
+        } else {
+            return builderWhere(paramName,type,value);
+        }
+    }
+
+    private Criterion builderWhere(String paramName,String type,Object value) {
         if("eq".equalsIgnoreCase(type)) {
             return Restrictions.eq(paramName,value);
         } else if("like".equalsIgnoreCase(type)) {
@@ -84,5 +97,46 @@ public abstract class BaseDao<T,PK extends Serializable> {
             return Restrictions.le(paramName,value);
         }
         return null;
+    }
+
+    public Long count() {
+        Criteria criteria = getSession().createCriteria(entityClazz);
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    public Long count(List<RequestQuery> requestQueryList) {
+        Criteria criteria = getSession().createCriteria(entityClazz);
+        builderWhereCondition(requestQueryList, criteria);
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    private void builderWhereCondition(List<RequestQuery> requestQueryList, Criteria criteria) {
+        for(RequestQuery requestQuery : requestQueryList) {
+            String paramName = requestQuery.getParameterName();
+            String type = requestQuery.getEqualType();
+            Object value = requestQuery.getValue();
+            criteria.add(createCriterion(paramName,type,value));
+        }
+    }
+
+    public Page<T> findByRequestQueryListAndPageNo(List<RequestQuery> requestQueryList, Integer pageNo) {
+        //1. 计算总记录数（根据查询条件）
+        Long count = count(requestQueryList);
+        //2. 根据总记录数计算总页数
+        Page<T> page = new Page<T>(count.intValue(),15,pageNo);
+        //3. 给定页号获取起始行号
+        //4. 查询
+        Criteria criteria = getSession().createCriteria(entityClazz);
+
+        builderWhereCondition(requestQueryList,criteria);
+        criteria.setFirstResult(page.getStart());
+        criteria.setMaxResults(15);
+
+        List<T> resultList = criteria.list();
+
+        page.setItems(resultList);
+        return page;
     }
 }

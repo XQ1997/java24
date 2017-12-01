@@ -2,6 +2,7 @@ package com.kaishengit.controller;
 
 import com.kaishengit.pojo.Product;
 import com.kaishengit.service.ProductService;
+import com.kaishengit.util.Page;
 import com.kaishengit.util.RequestQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,10 +26,11 @@ public class ProductController {
 
     @GetMapping
     public String home(Model model,
-                       HttpServletRequest request) {
+                       HttpServletRequest request,
+                       @RequestParam(required = false,name = "p",defaultValue = "1") Integer pageNo) {
         List<RequestQuery> requestQueryList = RequestQuery.builderRequestQuery(request);
-        List<Product> productList = productService.findByRequestQuery(requestQueryList);
-        model.addAttribute("productList",productList);
+        Page<Product> productList = productService.findByRequestQuery(requestQueryList,pageNo);
+        model.addAttribute("page",productList);
         return "list";
     }
 
