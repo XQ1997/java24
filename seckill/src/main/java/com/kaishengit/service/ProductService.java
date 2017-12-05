@@ -1,6 +1,7 @@
 package com.kaishengit.service;
 
 import com.kaishengit.entity.Product;
+import com.kaishengit.service.exception.ServiceException;
 
 import java.io.InputStream;
 import java.util.List;
@@ -29,4 +30,11 @@ public interface ProductService {
      * @return
      */
     Product findById(Integer id);
+
+    /**
+     * 秒杀商品
+     * @param id
+     * @throws ServiceException
+     */
+    void secKill(Integer id) throws ServiceException;
 }

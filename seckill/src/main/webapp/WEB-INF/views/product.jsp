@@ -73,12 +73,26 @@ ozoybvszl.bkt.clouddn.com/${product.productImage}?imageView2/1/w/300/h/300" alt=
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/moment.js"></script>
     <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
     <script>
         $(function () {
             $("#clock").countdown(${product.startTimeTs},function(event) {
                 $(this).html(event.strftime('%D 天 %H小时%M分钟%S秒'));
             }).on("finish.countdown",function () {
                 $("#secKillBtn").text("立即抢购").removeAttr("disabled");
+            });
+            
+            //抢购
+            $("#secKillBtn").click(function () {
+                $.get("/product/seckill/${product.id}").done(function (resp) {
+                    if(resp.state == "success") {
+                        layer.alert("抢购成功");
+                    } else {
+                        layer.alert(resp.message);
+                    }
+                }).error(function () {
+                    layer.msg("服务器异常");
+                });
             });
         });
     </script>

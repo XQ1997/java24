@@ -1,7 +1,9 @@
 package com.kaishengit.controller;
 
+import com.kaishengit.controller.result.AjaxResult;
 import com.kaishengit.entity.Product;
 import com.kaishengit.service.ProductService;
+import com.kaishengit.service.exception.ServiceException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -81,7 +84,21 @@ public class HomeController {
     }
 
 
-
+    /**
+     * 秒杀商品
+     * @param id
+     * @return
+     */
+    @GetMapping("/product/seckill/{id:\\d+}")
+    @ResponseBody
+    public AjaxResult secKill(@PathVariable Integer id) {
+        try {
+            productService.secKill(id);
+            return AjaxResult.success();
+        } catch (ServiceException ex) {
+            return AjaxResult.error(ex.getMessage());
+        }
+    }
 
 
 
