@@ -9,17 +9,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
+        .btn {
+            margin-top: 35px;
+            width: 400px;
+        }
         .clock {
+            margin-top: 40px;
             font-size: 24px;
         }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h4>${product.productName} <small>${product.productTitle}</small></h4>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <i class="fa fa-shopping-basket"></i> ProductStore
+                </a>
+            </div>
         </div>
+    </nav>
+    <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <img src="http://
@@ -44,11 +57,18 @@ ozoybvszl.bkt.clouddn.com/${product.productImage}?imageView2/1/w/300/h/300" alt=
                         <div class="clock">距离抢购时间：<span id="clock">xx分xx秒</span></div>
                     </c:otherwise>
                 </c:choose>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-8">
+                <div>
+                    ${product.productDesc}
+                </div>
             </div>
         </div>
-        <div>
-            ${product.productDesc}
-        </div>
+
     </div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/moment.js"></script>
