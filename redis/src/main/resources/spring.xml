@@ -14,6 +14,39 @@
         <property name="minIdle" value="3"/>
     </bean>
 
+    <!--jedis集群-->
+    <bean class="redis.clients.jedis.JedisCluster">
+        <constructor-arg name="nodes">
+            <set>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.30"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.31"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.40"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.41"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.50"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.135.60"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+            </set>
+        </constructor-arg>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg name="host" value="192.168.135.30"/>
@@ -22,9 +55,10 @@
 
     <!--SpringData redisConnectionFactory-->
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <property name="usePool" value="true"/>
-        <property name="hostName" value="192.168.135.30"/>
-        <property name="port" value="6379"/>
+        <!--<property name="usePool" value="true"/>-->
+        <constructor-arg name="clusterConfig" ref="clusterConfiguration"/>
+        <!--<property name="hostName" value="192.168.135.30"/>-->
+        <!--<property name="port" value="6379"/>-->
         <property name="poolConfig" ref="jedisPoolConfig"/>
     </bean>
     <!--redis template-->
@@ -39,6 +73,38 @@
         <property name="valueSerializer">
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>-->
+    </bean>
+
+    <!--SpringData Redis Cluster-->
+    <bean id="clusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="clusterNodes">
+            <list>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.30"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.31"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.40"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.41"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.50"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.135.60"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+            </list>
+        </property>
     </bean>
 
 

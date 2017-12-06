@@ -13,8 +13,9 @@ public class JedisTest {
 
     @Test
     public void setString() {
-        Jedis jedis = new Jedis("192.168.135.30",6379);
-        jedis.set("name-2","李思");
+        Jedis jedis = new Jedis("192.168.135.30",6700);
+       // jedis.set("name-3","rose");
+        jedis.save();
         jedis.close();
     }
 
