@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="abc" th:replace="~{comment::topHeader('2018')}"></div>
+
+
+<a th:href="@{/user(id=${user.id})}">/user?id=1009</a>
+<a th:href="@{/user/{id}/{name}(id=${user.id},name=${user.userName})}">/user/1009</a>
+
+<h1 th:rel="${user.id}" th:attr="data-id=${user.id},data-name=${user.userName}">Hello,SpringBoot</h1>
+<input type="text" th:value="${user.userName}">
+
+    <ul>
+        <li th:each="name,iterStat : ${userNameList}" th:text="${iterStat.index + '->' + iterStat.count + '->' + name}"></li>
+    </ul>
+<hr>
+    <h3 th:text="${message}">Hello,SpringBoot 3.5</h3>
+    <h3 th:text="${user.userName}"></h3>
+    <h3 th:text="${session.msg}"></h3>
+    <h3 th:text="${param.q}"></h3>
+    <hr>
+    <h3 th:if="${user.userName == 'lisi'}">Hello,Lisi</h3>
+    <h3 th:unless="${user.userName == 'wangwu'}">Hi,Sir</h3>
+    <ul th:switch="${user.userName}">
+        <li th:case="'lisi2'">lisi</li>
+        <li th:case="'wangwu'">wangwu</li>
+        <li th:case="*">other</li>
+    </ul>
+    <img th:src="@{'/image/duoyun.png'}" src="../static/image/duoyun.png">
+
+
+    <div th:replace="~{comment::#footer}"></div>
+
+<script th:inline="javascript">
+    [# th:if="${user.id == 1010}"]
+    var id = [[${user.id}]];
+    var userName = [[${user.userName}]];
+    [/]
+</script>
+</body>
+</html>
