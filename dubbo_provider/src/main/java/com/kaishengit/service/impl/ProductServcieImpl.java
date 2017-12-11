@@ -1,10 +1,12 @@
 package com.kaishengit.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.kaishengit.service.ProductServcie;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Service(timeout = 5000,version = "1.2")
 public class ProductServcieImpl implements ProductServcie {
 
     public List<String> findAllProductNames() {
