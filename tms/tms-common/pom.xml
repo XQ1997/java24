@@ -18,11 +18,11 @@
     <distributionManagement>
         <repository>
             <id>kaishengit-release</id>
-            <url>http://192.168.135.111:8081/repository/kaishengit-release/</url>
+            <url>http://192.168.1.201:8081/repository/kaishengit-release/</url>
         </repository>
         <snapshotRepository>
             <id>kaishengit-snapshot</id>
-            <url>http://192.168.135.111:8081/repository/kaishengit-snapshot/</url>
+            <url>http://192.168.1.201:8081/repository/kaishengit-snapshot/</url>
         </snapshotRepository>
     </distributionManagement>
 

@@ -12,6 +12,21 @@
     <artifactId>tms-storage-api</artifactId>
     <packaging>war</packaging>
 
+    <repositories>
+        <repository>
+            <id>kaishengit-release</id>
+            <url>http://192.168.1.201:8081/repository/kaishengit-release/</url>
+        </repository>
+        <repository>
+            <id>kaishengit-snapshot</id>
+            <url>http://192.168.1.201:8081/repository/kaishengit-snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -127,7 +142,6 @@
             </plugin>
         </plugins>
     </build>
-
 
 
 </project>
