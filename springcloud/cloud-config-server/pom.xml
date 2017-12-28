@@ -4,10 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.kaishengit</groupId>
-	<artifactId>movie-service-provider</artifactId>
+	<artifactId>cloud-config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
+	<name>cloud-config-server</name>
+	<description></description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,19 +26,15 @@
 	</properties>
 
 	<dependencies>
-		<!--Eureka的客户端-->
+		<!--Config的Server端依赖-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+		<!--Eureka的Client依赖-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-        <!--Spring cloud config 客户端-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
         <!--Spring cloud bus 依赖-->
         <dependency>
