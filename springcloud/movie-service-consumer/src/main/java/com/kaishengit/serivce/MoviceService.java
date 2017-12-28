@@ -17,7 +17,7 @@ public class MoviceService {
             @HystrixProperty(name = "coreSize",value = "30")
     })
     public Movie findById(Integer id) {
-        String url = "http://MOVIE-SERVICE-PROVIDER/movie/"+id;
+        String url = "http://API-GATEWAY/api/m/movie/"+id+"?accessToken=123123";
         return restTemplate.getForObject(url,Movie.class);
     }
 
